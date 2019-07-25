@@ -6,7 +6,7 @@
 #    By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/14 16:24:36 by lde-moul          #+#    #+#              #
-#    Updated: 2019/03/15 16:30:06 by lde-moul         ###   ########.fr        #
+#    Updated: 2019/07/25 18:21:18 by lde-moul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,13 @@ CFLAGS = -Wall -Wextra -Werror
 SRCDIR = src
 OBJDIR = obj
 
-SRCBASE =
+SRC =
 
 DEP =
 
-SRC = $(SRCBASE:%=$(SRCDIR)/%)
-OBJ = $(SRCBASE:%.c=$(OBJDIR)/%.o)
+OBJ := $(SRC:%.c=$(OBJDIR)/%.o)
+SRC := $(SRC:%=$(SRCDIR)/%)
+DEP := $(DEP:%=$(SRCDIR)/%)
 
 LIBFT_DIR = libft
 LIBFT_NAME = $(LIBFT_DIR)/libft.a
