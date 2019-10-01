@@ -17,6 +17,8 @@ void	free(void *ptr)
 	t_zone	**ptr_zone;
 	t_block	**ptr_block;
 
+	if (!ptr)
+		return ;
 	find_block((t_block*)ptr - 1, &ptr_zone, &ptr_block); // !!!
 	remove_block(ptr_zone, ptr_block);
 }
