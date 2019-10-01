@@ -33,6 +33,8 @@ void		*realloc(void *ptr, size_t size)
 	t_block	**ptr_block;
 	void	*new_ptr;
 
+	if (!ptr)
+		return (malloc(size));
 	find_block((t_block*)ptr - 1, &ptr_zone, &ptr_block); // !!!
 	if (enough_space_after_block(*ptr_zone, *ptr_block,
 		size - (*ptr_block)->size))
