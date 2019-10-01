@@ -6,7 +6,7 @@
 #    By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/14 16:24:36 by lde-moul          #+#    #+#              #
-#    Updated: 2019/07/25 18:21:18 by lde-moul         ###   ########.fr        #
+#    Updated: 2019/09/17 19:45:37 by lde-moul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,13 @@ CFLAGS = -Wall -Wextra -Werror
 SRCDIR = src
 OBJDIR = obj
 
-SRC =
+SRC = malloc.c\
+      realloc.c\
+      free.c\
+      show_alloc_mem.c\
+      util.c\
 
-DEP =
+DEP = malloc.h\
 
 OBJ := $(SRC:%.c=$(OBJDIR)/%.o)
 SRC := $(SRC:%=$(SRCDIR)/%)
