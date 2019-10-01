@@ -6,13 +6,14 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:56:45 by lde-moul          #+#    #+#             */
-/*   Updated: 2019/09/18 19:56:29 by lde-moul         ###   ########.fr       */
+/*   Updated: 2019/10/01 18:09:24 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 #include <sys/mman.h>
 #include <unistd.h>
+#include <errno.h>
 
 t_zone	*g_zones;
 
@@ -78,7 +79,9 @@ static t_zone	*add_zone(size_t block_size)
 
 	get_zone_size_and_type(block_size, &zone_size, &zone_type);
 	new_zone = mmap(NULL, zone_size,
-		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0); // !!!
+		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	if (new_zone == MAP_FAILED)
+		return (NULL);
 	new_zone->blocks = NULL;
 	new_zone->size = zone_size - sizeof(t_zone);
 	new_zone->type = zone_type;
@@ -121,5 +124,10 @@ void			*malloc(size_t size)
 		find_free_space(size, &zone, &block);
 	if (!zone)
 		zone = add_zone(size);
+	if (!zone)
+	{
+		errno = ENOMEM;
+		return (NULL);
+	}
 	return (add_block(size, zone, block) + 1);
 }

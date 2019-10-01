@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:19:14 by lde-moul          #+#    #+#             */
-/*   Updated: 2019/09/17 19:23:41 by lde-moul         ###   ########.fr       */
+/*   Updated: 2019/10/01 18:22:53 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void		find_block(t_block *block_to_find,
 		}
 		ptr_zone = &((*ptr_zone)->next);
 	}
+	*ptr_found_zone = NULL;
+	*ptr_found_block = NULL;
 }
 
 void		remove_block(t_zone **ptr_zone, t_block **ptr_block)
