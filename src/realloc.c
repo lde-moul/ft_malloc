@@ -12,7 +12,7 @@
 
 #include "malloc.h"
 
-void	move_content_to_new_location(void *old_ptr, void *new_ptr,
+static void	move_content_to_new_location(void *old_ptr, void *new_ptr,
 	size_t old_size, size_t new_size)
 {
 	int	i;
@@ -27,7 +27,7 @@ void	move_content_to_new_location(void *old_ptr, void *new_ptr,
 	}
 }
 
-void	*realloc(void *ptr, size_t size)
+void		*realloc(void *ptr, size_t size)
 {
 	t_zone	**ptr_zone;
 	t_block	**ptr_block;
