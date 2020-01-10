@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:33:36 by lde-moul          #+#    #+#             */
-/*   Updated: 2019/09/18 20:01:45 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:35:37 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void			show_alloc_mem(void);
 
 uintptr_t		zone_end(t_zone *zone);
 uintptr_t		block_end(t_block *block);
-int				enough_space_after_block(t_zone *zone, t_block *block,
-					size_t size);
+size_t			space_after_block(t_zone *zone, t_block *block);
 void			find_block(t_block *block_to_find,
 					t_zone ***ptr_found_zone, t_block ***ptr_found_block);
 void			remove_block(t_zone **ptr_zone, t_block **ptr_block);

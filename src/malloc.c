@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:56:45 by lde-moul          #+#    #+#             */
-/*   Updated: 2019/10/01 18:09:24 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:34:45 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void		find_free_space(size_t size,
 			*ptr_block = (*ptr_zone)->blocks;
 			while (*ptr_block)
 			{
-				if (enough_space_after_block(*ptr_zone, *ptr_block, size))
+				if (space_after_block(*ptr_zone, *ptr_block) >= size)
 					return ;
 				*ptr_block = (*ptr_block)->next;
 			}

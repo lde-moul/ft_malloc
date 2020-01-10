@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:17:26 by lde-moul          #+#    #+#             */
-/*   Updated: 2019/10/01 19:52:17 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:32:44 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void		*realloc(void *ptr, size_t size)
 	find_block((t_block*)ptr - 1, &ptr_zone, &ptr_block);
 	if (!ptr_block)
 		return (NULL);
-	else if (enough_space_after_block(*ptr_zone, *ptr_block,
-		size - (*ptr_block)->size) && size)
+	else if ((*ptr_block)->size + space_after_block(*ptr_zone, *ptr_block)
+		>= size && size)
 	{
 		(*ptr_block)->size = size;
 		return (ptr);

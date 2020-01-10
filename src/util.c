@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:19:14 by lde-moul          #+#    #+#             */
-/*   Updated: 2019/10/01 18:22:53 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:35:50 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ uintptr_t	block_end(t_block *block)
 	return ((uintptr_t)(block + 1) + block->size);
 }
 
-int			enough_space_after_block(t_zone *zone, t_block *block, size_t size)
+size_t		space_after_block(t_zone *zone, t_block *block)
 {
 	if (block->next)
-		return ((uintptr_t)block->next - block_end(block) >= size);
+		return ((uintptr_t)block->next - block_end(block));
 	else
-		return (zone_end(zone) - block_end(block) >= size);
+		return (zone_end(zone) - block_end(block));
 }
 
 void		find_block(t_block *block_to_find,
