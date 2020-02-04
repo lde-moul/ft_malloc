@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:17:26 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/01/21 16:24:58 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/01/21 21:02:59 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	try_simple_cases(void *ptr, size_t size, void **ptr_new_ptr)
 		*ptr_new_ptr = malloc(size);
 		return (1);
 	}
-	block = (t_block*)ptr - 1;
+	block = block_from_ptr(ptr);
 	*ptr_new_ptr = ptr;
 	return (size <= block->size
 		|| (block->next && size <= (uintptr_t)block->next - block_end(block)));
@@ -50,7 +50,7 @@ void		*realloc(void *ptr, size_t size)
 
 	if (try_simple_cases(ptr, size, &new_ptr))
 		return (new_ptr);
-	find_block((t_block*)ptr - 1, &ptr_zone, &ptr_block);
+	find_block(block_from_ptr(ptr), &ptr_zone, &ptr_block);
 	if (!ptr_block)
 		return (NULL);
 	else if ((*ptr_block)->size + space_after_block(*ptr_zone, *ptr_block)

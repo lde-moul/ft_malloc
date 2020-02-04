@@ -6,12 +6,13 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:19:14 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/01/10 18:35:50 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/02/04 21:01:24 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 #include <sys/mman.h>
+#include <stdalign.h>
 
 uintptr_t	zone_end(t_zone *zone)
 {
@@ -20,15 +21,12 @@ uintptr_t	zone_end(t_zone *zone)
 
 uintptr_t	block_end(t_block *block)
 {
-	return ((uintptr_t)(block + 1) + block->size);
+	return ((uintptr_t)align_up(block + 1, ALIGN) + block->size);
 }
 
-size_t		space_after_block(t_zone *zone, t_block *block)
+void		*block_from_ptr(void *ptr)
 {
-	if (block->next)
-		return ((uintptr_t)block->next - block_end(block));
-	else
-		return (zone_end(zone) - block_end(block));
+	return (align_down((t_block*)ptr - 1, alignof(t_block)));
 }
 
 void		find_block(t_block *block_to_find,
