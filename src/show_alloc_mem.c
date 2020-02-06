@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:37:05 by lde-moul          #+#    #+#             */
-/*   Updated: 2019/09/18 19:20:29 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/02/06 17:19:44 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void		show_alloc_mem(void)
 	t_zone	*zone;
 	t_block	*block;
 
+	pthread_mutex_lock(&g_mutex);
 	zone = g_zones;
 	while (zone)
 	{
@@ -74,4 +75,5 @@ void		show_alloc_mem(void)
 		}
 		zone = zone->next;
 	}
+	pthread_mutex_unlock(&g_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:56:45 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/02/06 18:18:17 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/02/06 19:13:39 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <stdalign.h>
 #include <errno.h>
 
+t_zone			*g_zones;
+pthread_mutex_t	g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static t_zone	*add_zone(size_t block_size)
 {
@@ -60,7 +62,7 @@ static t_block	*add_block(size_t size, t_zone *zone, t_block *block)
 	return (new_block);
 }
 
-void			*malloc(size_t size)
+void			*base_malloc(size_t size)
 {
 	t_zone	*zone;
 	t_block	*block;
@@ -77,4 +79,14 @@ void			*malloc(size_t size)
 		return (NULL);
 	}
 	return (align_up(add_block(size, zone, block) + 1, ALIGN));
+}
+
+void			*malloc(size_t size)
+{
+	void	*ptr;
+
+	pthread_mutex_lock(&g_mutex);
+	ptr = base_malloc(size);
+	pthread_mutex_unlock(&g_mutex);
+	return (ptr);
 }
