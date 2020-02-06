@@ -6,13 +6,21 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:17:26 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/01/21 21:02:59 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:06:44 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void	move_content_to_new_location(void *old_ptr, void *new_ptr,
+static size_t	space_after_block(t_zone *zone, t_block *block)
+{
+	if (block->next)
+		return ((uintptr_t)block->next - block_end(block));
+	else
+		return (zone_end(zone) - block_end(block));
+}
+
+static void		move_content_to_new_location(void *old_ptr, void *new_ptr,
 	size_t old_size, size_t new_size)
 {
 	int	i;
@@ -27,7 +35,7 @@ static void	move_content_to_new_location(void *old_ptr, void *new_ptr,
 	}
 }
 
-static int	try_simple_cases(void *ptr, size_t size, void **ptr_new_ptr)
+static int		try_simple_cases(void *ptr, size_t size, void **ptr_new_ptr)
 {
 	t_block	*block;
 
@@ -42,7 +50,7 @@ static int	try_simple_cases(void *ptr, size_t size, void **ptr_new_ptr)
 		|| (block->next && size <= (uintptr_t)block->next - block_end(block)));
 }
 
-void		*realloc(void *ptr, size_t size)
+void			*realloc(void *ptr, size_t size)
 {
 	t_zone	**ptr_zone;
 	t_block	**ptr_block;

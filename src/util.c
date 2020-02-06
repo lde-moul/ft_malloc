@@ -6,18 +6,13 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:19:14 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/02/04 21:01:24 by lde-moul         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:16:06 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 #include <sys/mman.h>
 #include <stdalign.h>
-
-uintptr_t	zone_end(t_zone *zone)
-{
-	return ((uintptr_t)(zone + 1) + zone->size);
-}
 
 uintptr_t	block_end(t_block *block)
 {

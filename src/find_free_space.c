@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   space.c                                            :+:      :+:    :+:   */
+/*   find_free_space.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 20:52:35 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/02/04 20:56:48 by lde-moul         ###   ########.fr       */
+/*   Created: 2020/02/06 18:07:11 by lde-moul          #+#    #+#             */
+/*   Updated: 2020/02/06 18:09:31 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,7 @@ static uintptr_t	block_start(void *ptr)
 	return (uintptr_t)align_up(block + 1, ALIGN);
 }
 
-size_t				space_after_block(t_zone *zone, t_block *block)
-{
-	if (block->next)
-		return ((uintptr_t)block->next - block_end(block));
-	else
-		return (zone_end(zone) - block_end(block));
-}
-
-int					enough_space_after_block(t_zone *zone, t_block *block,
+static int			enough_space_after_block(t_zone *zone, t_block *block,
 						size_t size)
 {
 	uintptr_t	end;
@@ -41,7 +33,7 @@ int					enough_space_after_block(t_zone *zone, t_block *block,
 	return (block_start((t_block*)block_end(block)) + size <= end);
 }
 
-int					enough_space_at_zone_start(t_zone *zone, size_t size)
+static int			enough_space_at_zone_start(t_zone *zone, size_t size)
 {
 	uintptr_t	end;
 
@@ -50,4 +42,31 @@ int					enough_space_at_zone_start(t_zone *zone, size_t size)
 	else
 		end = zone_end(zone);
 	return (block_start(zone + 1) + size <= end);
+}
+
+void				find_free_space(size_t size,
+	t_zone **ptr_zone, t_block **ptr_block)
+{
+	int	zone_type;
+
+	get_zone_size_and_type(size, NULL, &zone_type);
+	*ptr_block = NULL;
+	*ptr_zone = g_zones;
+	while (*ptr_zone)
+	{
+		if ((*ptr_zone)->type == zone_type)
+		{
+			if (enough_space_at_zone_start(*ptr_zone, size))
+				return ;
+			*ptr_block = (*ptr_zone)->blocks;
+			while (*ptr_block)
+			{
+				if (enough_space_after_block(*ptr_zone, *ptr_block, size))
+					return ;
+				*ptr_block = (*ptr_block)->next;
+			}
+		}
+		*ptr_zone = (*ptr_zone)->next;
+	}
+	return ;
 }
