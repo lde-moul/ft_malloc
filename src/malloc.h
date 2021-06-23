@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:33:36 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/02/06 18:45:21 by lde-moul         ###   ########.fr       */
+/*   Updated: 2021/06/23 15:52:49 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 
 # define ALIGN	16
 
-typedef struct	s_block
+typedef struct s_block
 {
 	struct s_block	*next;
 	size_t			size;
 }				t_block;
 
-typedef struct	s_zone
+typedef struct s_zone
 {
 	struct s_zone	*next;
 	t_block			*blocks;

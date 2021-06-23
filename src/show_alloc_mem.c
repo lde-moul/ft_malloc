@@ -27,7 +27,10 @@ static void	print_number(uintptr_t n, int base)
 	while (m)
 	{
 		digit = n / m;
-		s[i++] = (digit < 10) ? (digit + '0') : (digit - 10 + 'A');
+		if (digit < 10)
+			s[i++] = digit + '0';
+		else
+			s[i++] = digit - 10 + 'A';
 		n %= m;
 		m /= base;
 	}
@@ -57,7 +60,7 @@ static void	print_block(t_block *block)
 	write(1, " octets\n", 8);
 }
 
-void		show_alloc_mem(void)
+void	show_alloc_mem(void)
 {
 	t_zone	*zone;
 	t_block	*block;

@@ -6,13 +6,13 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:17:26 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/02/06 19:15:12 by lde-moul         ###   ########.fr       */
+/*   Updated: 2021/06/23 16:04:49 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void		*unlock_and_return(void *ptr)
+static void	*unlock_and_return(void *ptr)
 {
 	pthread_mutex_unlock(&g_mutex);
 	return (ptr);
@@ -26,22 +26,25 @@ static size_t	space_after_block(t_zone *zone, t_block *block)
 		return (zone_end(zone) - block_end(block));
 }
 
-static void		move_content_to_new_location(void *old_ptr, void *new_ptr,
+static void	move_content_to_new_location(void *old_ptr, void *new_ptr,
 	size_t old_size, size_t new_size)
 {
 	int	i;
 	int	n;
 
-	n = new_size > old_size ? old_size : new_size;
+	if (new_size > old_size)
+		n = old_size;
+	else
+		n = new_size;
 	i = 0;
 	while (i < n)
 	{
-		((char*)new_ptr)[i] = ((char*)old_ptr)[i];
+		((char *)new_ptr)[i] = ((char *)old_ptr)[i];
 		i++;
 	}
 }
 
-static int		try_simple_cases(void *ptr, size_t size, void **ptr_new_ptr)
+static int	try_simple_cases(void *ptr, size_t size, void **ptr_new_ptr)
 {
 	t_block	*block;
 
@@ -56,7 +59,7 @@ static int		try_simple_cases(void *ptr, size_t size, void **ptr_new_ptr)
 		|| (block->next && size <= (uintptr_t)block->next - block_end(block)));
 }
 
-void			*realloc(void *ptr, size_t size)
+void	*realloc(void *ptr, size_t size)
 {
 	t_zone	**ptr_zone;
 	t_block	**ptr_block;

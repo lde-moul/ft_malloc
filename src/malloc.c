@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:56:45 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/02/06 19:13:39 by lde-moul         ###   ########.fr       */
+/*   Updated: 2021/02/28 14:42:21 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_zone	*add_zone(size_t block_size)
 
 	get_zone_size_and_type(block_size, &zone_size, &zone_type);
 	new_zone = mmap(NULL, zone_size,
-		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+			PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (new_zone == MAP_FAILED)
 		return (NULL);
 	new_zone->blocks = NULL;
@@ -47,13 +47,13 @@ static t_block	*add_block(size_t size, t_zone *zone, t_block *block)
 
 	if (block)
 	{
-		new_block = (t_block*)block_end(block);
+		new_block = (t_block *)block_end(block);
 		new_block->next = block->next;
 		block->next = new_block;
 	}
 	else
 	{
-		new_block = (t_block*)(zone + 1);
+		new_block = (t_block *)(zone + 1);
 		new_block->next = zone->blocks;
 		zone->blocks = new_block;
 	}
@@ -62,7 +62,7 @@ static t_block	*add_block(size_t size, t_zone *zone, t_block *block)
 	return (new_block);
 }
 
-void			*base_malloc(size_t size)
+void	*base_malloc(size_t size)
 {
 	t_zone	*zone;
 	t_block	*block;
@@ -81,7 +81,7 @@ void			*base_malloc(size_t size)
 	return (align_up(add_block(size, zone, block) + 1, ALIGN));
 }
 
-void			*malloc(size_t size)
+void	*malloc(size_t size)
 {
 	void	*ptr;
 

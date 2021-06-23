@@ -18,7 +18,7 @@ uintptr_t	zone_end(t_zone *zone)
 	return ((uintptr_t)(zone + 1) + zone->size);
 }
 
-void		get_zone_size_and_type(size_t block_size,
+void	get_zone_size_and_type(size_t block_size,
 	size_t *zone_size, int *zone_type)
 {
 	if (block_size <= TINY)
@@ -36,5 +36,5 @@ void		get_zone_size_and_type(size_t block_size,
 	else
 		*zone_size = block_size + sizeof(t_block);
 	*zone_size += sizeof(t_zone);
-	*zone_size = (size_t)align_up(((void*)*zone_size), getpagesize());
+	*zone_size = (size_t)align_up(((void *)*zone_size), getpagesize());
 }

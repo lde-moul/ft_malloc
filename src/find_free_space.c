@@ -18,10 +18,10 @@ static uintptr_t	block_start(void *ptr)
 	t_block	*block;
 
 	block = align_up(ptr, alignof(t_block));
-	return (uintptr_t)align_up(block + 1, ALIGN);
+	return ((uintptr_t)align_up(block + 1, ALIGN));
 }
 
-static int			enough_space_after_block(t_zone *zone, t_block *block,
+static int	enough_space_after_block(t_zone *zone, t_block *block,
 						size_t size)
 {
 	uintptr_t	end;
@@ -30,10 +30,10 @@ static int			enough_space_after_block(t_zone *zone, t_block *block,
 		end = (uintptr_t)block->next;
 	else
 		end = zone_end(zone);
-	return (block_start((t_block*)block_end(block)) + size <= end);
+	return (block_start((t_block *)block_end(block)) + size <= end);
 }
 
-static int			enough_space_at_zone_start(t_zone *zone, size_t size)
+static int	enough_space_at_zone_start(t_zone *zone, size_t size)
 {
 	uintptr_t	end;
 
@@ -44,7 +44,7 @@ static int			enough_space_at_zone_start(t_zone *zone, size_t size)
 	return (block_start(zone + 1) + size <= end);
 }
 
-void				find_free_space(size_t size,
+void	find_free_space(size_t size,
 	t_zone **ptr_zone, t_block **ptr_block)
 {
 	int	zone_type;

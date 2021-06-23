@@ -19,12 +19,12 @@ uintptr_t	block_end(t_block *block)
 	return ((uintptr_t)align_up(block + 1, ALIGN) + block->size);
 }
 
-void		*block_from_ptr(void *ptr)
+void	*block_from_ptr(void *ptr)
 {
-	return (align_down((t_block*)ptr - 1, alignof(t_block)));
+	return (align_down((t_block *)ptr - 1, alignof(t_block)));
 }
 
-void		find_block(t_block *block_to_find,
+void	find_block(t_block *block_to_find,
 	t_zone ***ptr_found_zone, t_block ***ptr_found_block)
 {
 	t_zone	**ptr_zone;
@@ -33,8 +33,8 @@ void		find_block(t_block *block_to_find,
 	ptr_zone = &g_zones;
 	while (*ptr_zone)
 	{
-		if ((t_block*)*ptr_zone < block_to_find
-			&& (t_block*)zone_end(*ptr_zone) > block_to_find)
+		if ((t_block *)*ptr_zone < block_to_find
+			&& (t_block *)zone_end(*ptr_zone) > block_to_find)
 		{
 			ptr_block = &((*ptr_zone)->blocks);
 			while (*ptr_block)
@@ -54,7 +54,7 @@ void		find_block(t_block *block_to_find,
 	*ptr_found_block = NULL;
 }
 
-void		remove_block(t_zone **ptr_zone, t_block **ptr_block)
+void	remove_block(t_zone **ptr_zone, t_block **ptr_block)
 {
 	t_zone	*zone;
 
