@@ -19,7 +19,6 @@ BASENAME = libft_malloc
 NAME = $(BASENAME)_$(HOSTTYPE).so
 LINKNAME = $(BASENAME).so
 
-CC = clang
 CFLAGS = -Wall -Wextra -Werror
 
 SRCDIR = src
