@@ -51,7 +51,7 @@ void	find_free_space(size_t size,
 
 	get_zone_size_and_type(size, NULL, &zone_type);
 	*ptr_block = NULL;
-	*ptr_zone = g_zones;
+	*ptr_zone = g_state.zones;
 	while (*ptr_zone)
 	{
 		if ((*ptr_zone)->type == zone_type)

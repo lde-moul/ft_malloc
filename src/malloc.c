@@ -15,7 +15,7 @@
 #include <stdalign.h>
 #include <errno.h>
 
-t_zone			*g_zones;
+t_state			g_state;
 pthread_mutex_t	g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static t_zone	*add_zone(size_t block_size)
@@ -33,7 +33,7 @@ static t_zone	*add_zone(size_t block_size)
 	new_zone->blocks = NULL;
 	new_zone->size = zone_size - sizeof(t_zone);
 	new_zone->type = zone_type;
-	ptr_zone = &g_zones;
+	ptr_zone = &g_state.zones;
 	while (*ptr_zone && *ptr_zone < new_zone)
 		ptr_zone = &((*ptr_zone)->next);
 	new_zone->next = *ptr_zone;
@@ -45,6 +45,8 @@ static t_block	*add_block(size_t size, t_zone *zone, t_block *block)
 {
 	t_block	*new_block;
 
+	if (!zone->blocks && zone->type < 2)
+		g_state.empty_zone_ready[zone->type] = 0;
 	if (block)
 	{
 		new_block = (t_block *)block_end(block);

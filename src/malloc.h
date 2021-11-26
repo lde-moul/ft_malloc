@@ -36,7 +36,13 @@ typedef struct s_zone
 	int				type;
 }				t_zone;
 
-extern t_zone			*g_zones;
+typedef struct s_state
+{
+	t_zone	*zones;
+	int		empty_zone_ready[2];
+}				t_state;
+
+extern t_state			g_state;
 extern pthread_mutex_t	g_mutex;
 
 void			*malloc(size_t size);

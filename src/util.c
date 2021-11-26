@@ -30,7 +30,7 @@ void	find_block(t_block *block_to_find,
 	t_zone	**ptr_zone;
 	t_block	**ptr_block;
 
-	ptr_zone = &g_zones;
+	ptr_zone = &g_state.zones;
 	while (*ptr_zone)
 	{
 		if ((t_block *)*ptr_zone < block_to_find
@@ -62,7 +62,12 @@ void	remove_block(t_zone **ptr_zone, t_block **ptr_block)
 	*ptr_block = (*ptr_block)->next;
 	if (!zone->blocks)
 	{
-		*ptr_zone = zone->next;
-		munmap(zone, sizeof(t_zone) + zone->size);
+		if (zone->type == 2 || g_state.empty_zone_ready[zone->type])
+		{
+			*ptr_zone = zone->next;
+			munmap(zone, sizeof(t_zone) + zone->size);
+		}
+		else
+			g_state.empty_zone_ready[zone->type] = 1;
 	}
 }

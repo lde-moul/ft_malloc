@@ -66,7 +66,7 @@ void	show_alloc_mem(void)
 	t_block	*block;
 
 	pthread_mutex_lock(&g_mutex);
-	zone = g_zones;
+	zone = g_state.zones;
 	while (zone)
 	{
 		print_zone(zone);
