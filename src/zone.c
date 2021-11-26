@@ -29,9 +29,9 @@ void	get_zone_size_and_type(size_t block_size,
 		*zone_type = 2;
 	if (!zone_size)
 		return ;
-	if (*zone_type == TINY)
+	if (*zone_type == 0)
 		*zone_size = 100 * (TINY + sizeof(t_block));
-	else if (*zone_type == SMALL)
+	else if (*zone_type == 1)
 		*zone_size = 100 * (SMALL + sizeof(t_block));
 	else
 		*zone_size = block_size + sizeof(t_block);
