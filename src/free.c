@@ -21,11 +21,7 @@ void	free(void *ptr)
 		return ;
 	pthread_mutex_lock(&g_mutex);
 	find_block(block_from_ptr(ptr), &ptr_zone, &ptr_block);
-	if (!ptr_block)
-	{
-		pthread_mutex_unlock(&g_mutex);
-		return ;
-	}
-	remove_block(ptr_zone, ptr_block);
+	if (ptr_block)
+		remove_block(ptr_zone, ptr_block);
 	pthread_mutex_unlock(&g_mutex);
 }
