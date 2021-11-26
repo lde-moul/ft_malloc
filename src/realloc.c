@@ -44,21 +44,6 @@ static void	move_content_to_new_location(void *old_ptr, void *new_ptr,
 	}
 }
 
-static int	try_simple_cases(void *ptr, size_t size, void **ptr_new_ptr)
-{
-	t_block	*block;
-
-	if (!ptr)
-	{
-		*ptr_new_ptr = base_malloc(size);
-		return (1);
-	}
-	block = block_from_ptr(ptr);
-	*ptr_new_ptr = ptr;
-	return (size <= block->size
-		|| (block->next && size <= (uintptr_t)block->next - block_end(block)));
-}
-
 void	*realloc(void *ptr, size_t size)
 {
 	t_zone	**ptr_zone;
@@ -66,24 +51,21 @@ void	*realloc(void *ptr, size_t size)
 	void	*new_ptr;
 
 	pthread_mutex_lock(&g_mutex);
-	if (try_simple_cases(ptr, size, &new_ptr))
-		return (unlock_and_return(new_ptr));
+	if (!ptr)
+		return (unlock_and_return(base_malloc(size)));
 	find_block(block_from_ptr(ptr), &ptr_zone, &ptr_block);
 	if (!ptr_block)
 		return (unlock_and_return(NULL));
-	else if ((*ptr_block)->size + space_after_block(*ptr_zone, *ptr_block)
+	if ((*ptr_block)->size + space_after_block(*ptr_zone, *ptr_block)
 		>= size && size)
 	{
 		(*ptr_block)->size = size;
 		return (unlock_and_return(ptr));
 	}
-	else
-	{
-		new_ptr = base_malloc(size);
-		if (!new_ptr)
-			return (unlock_and_return(NULL));
-		move_content_to_new_location(ptr, new_ptr, (*ptr_block)->size, size);
-		remove_block(ptr_zone, ptr_block);
-		return (unlock_and_return(new_ptr));
-	}
+	new_ptr = base_malloc(size);
+	if (!new_ptr)
+		return (unlock_and_return(NULL));
+	move_content_to_new_location(ptr, new_ptr, (*ptr_block)->size, size);
+	remove_block(ptr_zone, ptr_block);
+	return (unlock_and_return(new_ptr));
 }
