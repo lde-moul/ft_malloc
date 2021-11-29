@@ -29,8 +29,8 @@ static size_t	space_after_block(t_zone *zone, t_block *block)
 static void	move_content_to_new_location(void *old_ptr, void *new_ptr,
 	size_t old_size, size_t new_size)
 {
-	int	i;
-	int	n;
+	size_t	i;
+	size_t	n;
 
 	if (new_size > old_size)
 		n = old_size;
