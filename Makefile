@@ -6,7 +6,7 @@
 #    By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/14 16:24:36 by lde-moul          #+#    #+#              #
-#    Updated: 2020/02/06 18:14:41 by lde-moul         ###   ########.fr        #
+#    Updated: 2021/11/29 16:25:57 by lde-moul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ OBJDIR = obj
 
 SRC = malloc.c\
       realloc.c\
+      calloc.c\
       free.c\
       show_alloc_mem.c\
       find_free_space.c\
