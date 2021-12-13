@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:56:45 by lde-moul          #+#    #+#             */
-/*   Updated: 2021/02/28 14:42:21 by lde-moul         ###   ########.fr       */
+/*   Updated: 2021/12/13 19:09:49 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,17 @@ static t_block	*add_block(size_t size, t_zone *zone, t_block *block)
 	if (block)
 	{
 		new_block = (t_block *)block_end(block);
+		new_block = align_up(new_block, alignof(t_block));
 		new_block->next = block->next;
 		block->next = new_block;
 	}
 	else
 	{
 		new_block = (t_block *)(zone + 1);
+		new_block = align_up(new_block, alignof(t_block));
 		new_block->next = zone->blocks;
 		zone->blocks = new_block;
 	}
-	new_block = align_up(new_block, alignof(t_block));
 	new_block->size = size;
 	return (new_block);
 }
