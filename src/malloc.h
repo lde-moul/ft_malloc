@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:33:36 by lde-moul          #+#    #+#             */
-/*   Updated: 2021/06/23 15:52:49 by lde-moul         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:36:22 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <pthread.h>
 
 # define TINY	64
-# define SMALL	1024
+# define SMALL	512
 
 # define ALIGN	16
 
