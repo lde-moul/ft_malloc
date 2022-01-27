@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:33:36 by lde-moul          #+#    #+#             */
-/*   Updated: 2022/01/13 14:36:22 by lde-moul         ###   ########.fr       */
+/*   Updated: 2022/01/27 15:50:09 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_zone
 typedef struct s_state
 {
 	t_zone	*zones;
-	int		empty_zone_ready[2];
+	int		empty_zone_ready[3];
 }				t_state;
 
 extern t_state			g_state;

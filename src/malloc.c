@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:56:45 by lde-moul          #+#    #+#             */
-/*   Updated: 2021/12/13 19:09:49 by lde-moul         ###   ########.fr       */
+/*   Updated: 2022/01/27 15:57:10 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_block	*add_block(size_t size, t_zone *zone, t_block *block)
 {
 	t_block	*new_block;
 
-	if (!zone->blocks && zone->type < 2)
+	if (!zone->blocks)
 		g_state.empty_zone_ready[zone->type] = 0;
 	if (block)
 	{
@@ -72,8 +72,7 @@ void	*base_malloc(size_t size)
 
 	zone = NULL;
 	block = NULL;
-	if (size <= SMALL)
-		find_free_space(size, &zone, &block);
+	find_free_space(size, &zone, &block);
 	if (!zone)
 		zone = add_zone(size);
 	if (!zone)

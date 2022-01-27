@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:19:14 by lde-moul          #+#    #+#             */
-/*   Updated: 2020/02/06 18:16:06 by lde-moul         ###   ########.fr       */
+/*   Updated: 2022/01/27 15:52:33 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	remove_block(t_zone **ptr_zone, t_block **ptr_block)
 	*ptr_block = (*ptr_block)->next;
 	if (!zone->blocks)
 	{
-		if (zone->type == 2 || g_state.empty_zone_ready[zone->type])
+		if (g_state.empty_zone_ready[zone->type])
 		{
 			*ptr_zone = zone->next;
 			munmap(zone, sizeof(t_zone) + zone->size);
