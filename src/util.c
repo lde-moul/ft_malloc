@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:19:14 by lde-moul          #+#    #+#             */
-/*   Updated: 2022/01/27 15:52:33 by lde-moul         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:56:39 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*block_from_ptr(void *ptr)
 	return (align_down((t_block *)ptr - 1, alignof(t_block)));
 }
 
-void	find_block(t_block *block_to_find,
+void	find_ptr(void *ptr_to_find,
 	t_zone ***ptr_found_zone, t_block ***ptr_found_block)
 {
 	t_zone	**ptr_zone;
@@ -33,13 +33,13 @@ void	find_block(t_block *block_to_find,
 	ptr_zone = &g_state.zones;
 	while (*ptr_zone)
 	{
-		if ((t_block *)*ptr_zone < block_to_find
-			&& (t_block *)zone_end(*ptr_zone) > block_to_find)
+		if ((void*)*ptr_zone < ptr_to_find
+			&& (void*)zone_end(*ptr_zone) > ptr_to_find)
 		{
 			ptr_block = &((*ptr_zone)->blocks);
 			while (*ptr_block)
 			{
-				if (*ptr_block == block_to_find)
+				if (align_up(*ptr_block + 1, ALIGN) == ptr_to_find)
 				{
 					*ptr_found_zone = ptr_zone;
 					*ptr_found_block = ptr_block;

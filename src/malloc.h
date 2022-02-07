@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:33:36 by lde-moul          #+#    #+#             */
-/*   Updated: 2022/01/27 15:50:09 by lde-moul         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:57:31 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void			*align_up(void *ptr, size_t size);
 void			*align_down(void *ptr, size_t size);
 uintptr_t		block_end(t_block *block);
 void			*block_from_ptr(void *ptr);
-void			find_block(t_block *block_to_find,
+void			find_ptr(void *ptr_to_find,
 					t_zone ***ptr_found_zone, t_block ***ptr_found_block);
 void			remove_block(t_zone **ptr_zone, t_block **ptr_block);
 

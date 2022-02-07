@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:17:26 by lde-moul          #+#    #+#             */
-/*   Updated: 2021/06/23 16:04:49 by lde-moul         ###   ########.fr       */
+/*   Updated: 2022/02/07 19:00:21 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*realloc(void *ptr, size_t size)
 	pthread_mutex_lock(&g_mutex);
 	if (!ptr)
 		return (unlock_and_return(base_malloc(size)));
-	find_block(block_from_ptr(ptr), &ptr_zone, &ptr_block);
+	find_ptr(ptr, &ptr_zone, &ptr_block);
 	if (!ptr_block)
 		return (unlock_and_return(NULL));
 	if ((*ptr_block)->size + space_after_block(*ptr_zone, *ptr_block)
