@@ -6,7 +6,7 @@
 /*   By: lde-moul <lde-moul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:19:14 by lde-moul          #+#    #+#             */
-/*   Updated: 2022/02/07 18:56:39 by lde-moul         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:16:51 by lde-moul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	find_ptr(void *ptr_to_find,
 	ptr_zone = &g_state.zones;
 	while (*ptr_zone)
 	{
-		if ((void*)*ptr_zone < ptr_to_find
+		if ((void *)*ptr_zone < ptr_to_find
 			&& (void*)zone_end(*ptr_zone) > ptr_to_find)
 		{
 			ptr_block = &((*ptr_zone)->blocks);
